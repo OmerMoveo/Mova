@@ -56,7 +56,7 @@ const Dictaphone = () => {
           <option>test2</option>
           <option>test3</option>
         </StyledSelect>
-        <SendButtonStyled>Send</SendButtonStyled>
+        <SendButtonStyled disabled={!transcript}>Send</SendButtonStyled>
       </SelectSendDiv>
     </Container>
   );

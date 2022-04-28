@@ -32,6 +32,7 @@ export const StyledSelect = styled.select`
   height: 30px;
   padding: 0 0.5em;
   background-color: white;
+  position: relative;
 `;
 
 export const SendButtonStyled = styled.button`
@@ -41,6 +42,13 @@ export const SendButtonStyled = styled.button`
   background-color: "#fffff";
   border-radius: 2px;
   border: none;
+  cursor: pointer;
+  :disabled {
+    cursor: not-allowed;
+  }
+  :not([disabled]):hover {
+    opacity: 0.8;
+  }
 `;
 
 export const SelectSendDiv = styled.div`
