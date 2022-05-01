@@ -45,7 +45,7 @@ const Dictaphone = () => {
 
       <OutputContainer>
         <OutputText>{transcript}</OutputText>
-        <StyledTrashBtn clickHandler={resetTranscript} />
+        <StyledTrashBtn active={transcript} clickHandler={resetTranscript} />
       </OutputContainer>
       <SelectSendDiv>
         <StyledSelect>
