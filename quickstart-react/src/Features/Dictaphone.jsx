@@ -40,9 +40,8 @@ const Dictaphone = () => {
         <StyledMicBtn />
       </MicWrapper>
       <ListenStatus active={listening}>
-        {listening ? "Listening..." : "Start Recording"}
+        {listening ? "Listening..." : "Start recording now"}
       </ListenStatus>
-
       <OutputContainer>
         <OutputText>{transcript}</OutputText>
         <StyledTrashBtn active={transcript} clickHandler={resetTranscript} />
