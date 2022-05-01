@@ -52,7 +52,7 @@ const Dictaphone = () => {
           options={["First item", "Second item", "Third item"]}
           title="Assign item"
         />
-        <Button label="Update" disabled={!transcript}></Button>
+        <Button label="Update" disabled={!transcript} />
       </SelectSendDiv>
     </Container>
   );
