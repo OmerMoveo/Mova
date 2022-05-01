@@ -21,7 +21,7 @@ export const Container = styled.div`
   align-items: center;
   border-radius: 5rem;
   padding: 5rem;
-  border: 0.1em solid #181C3C;
+  border: 0.1em solid #181c3c;
   box-shadow: 0em 0em 0.3em white;
 `;
 
@@ -35,11 +35,12 @@ export const ListenStatus = styled.p`
 export const StyledSelect = styled.select`
   height: 30px;
   padding: 0 0.5em;
-  background-color: #0073EA;
+  background-color: #0073ea;
   color: white;
   position: relative;
   text-align: center;
   width: 12em;
+  margin-bottom: 8px;
   :hover {
     cursor: pointer;
   }
@@ -48,11 +49,11 @@ export const StyledSelect = styled.select`
 export const SendButtonStyled = styled.button`
   margin-top: 10px;
   width: 12em;
-  color:white;
+  color: white;
   padding: 4px 8px;
   height: 32px;
   background-color: transparent;
-  border: 1px solid #181C3C;
+  border: 1px solid #181c3c;
   border-radius: 4px;
   box-shadow: 0em 0em 0.2em white;
   cursor: pointer;
@@ -62,7 +63,7 @@ export const SendButtonStyled = styled.button`
     color: darkgray;
   }
   :not([disabled]):hover {
-    background-color: #181C3C;
+    background-color: #181c3c;
   }
 `;
 
@@ -84,7 +85,7 @@ export const OutputContainer = styled.div`
   max-width: 20em;
   padding: 0.5em 1em;
   margin: 1em 0;
-  background-color: white
+  background-color: white;
 `;
 
 export const OutputText = styled.p`
