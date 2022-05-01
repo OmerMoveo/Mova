@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "monday-ui-components";
 import Select from "./Select";
 import SpeechRecognition, {
@@ -15,9 +15,28 @@ import {
   SelectSendDiv,
   SendButtonStyled,
 } from "./style";
-import { useEffect } from "react";
-
+import mondaySdk from "monday-sdk-js";
+import { useContext } from "react";
+import { AppContext } from "../context/AppState";
+const monday = mondaySdk();
 const Dictaphone = () => {
+  const { setUserData, userData, setBoardData, boardData, selectedColumn } =
+    useContext(AppContext);
+  useEffect(() => {
+    monday.listen("context", async (res) => {
+      setUserData(res.data);
+      const itemRes =
+        res.data.itemIds &&
+        (await monday.api(
+          `query { items (ids: $itemIds) { name column_values { title text }}}`,
+          {
+            variables: { itemIds: res.data.itemIds[0] },
+          }
+        ));
+      setBoardData(itemRes);
+    });
+  }, []);
+
   const {
     transcript,
     listening,
@@ -25,6 +44,21 @@ const Dictaphone = () => {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
+  const handleClick = async () => {
+    if (!selectedColumn || !userData || !transcript) return;
+    const query = `mutation changeValues($board_id: Int!, $item_id: Int, $column_id: String!, $value: JSON!) {
+      change_column_value (board_id: $board_id, item_id: $item_id , column_id: $column_id, value: $value) {
+        id
+      } 
+    }`;
+    const variables = {
+      board_id: userData.boardId[0],
+      item_id: userData.itemIds[0],
+      column_id: selectedColumn,
+      value: transcript,
+    };
+    await monday.api(query, { variables });
+  };
   const micClick = () => {
     if (!listening) {
       SpeechRecognition.startListening({ language: "en-US" });
@@ -49,10 +83,10 @@ const Dictaphone = () => {
       </OutputContainer>
       <SelectSendDiv>
         <Select
-          options={["First item", "Second item", "Third item"]}
+          options={boardData && boardData["column_values"]}
           title="Assign item"
         />
-        <Button label="Update" disabled={!transcript} />
+        <Button label="Update" disabled={!transcript} onClick={handleClick} />
       </SelectSendDiv>
     </Container>
   );
