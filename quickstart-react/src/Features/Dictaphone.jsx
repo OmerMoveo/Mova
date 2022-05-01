@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -33,19 +32,17 @@ const Dictaphone = () => {
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
-
   return (
     <Container>
       <MicWrapper active={listening} onClick={micClick}>
         <StyledMicBtn />
       </MicWrapper>
       <ListenStatus active={listening}>
-        {listening ? "Listening..." : "Start Recording"}
+        {listening ? "Listening..." : "Start recording now"}
       </ListenStatus>
-
       <OutputContainer>
         <OutputText>{transcript}</OutputText>
-        <StyledTrashBtn clickHandler={resetTranscript} />
+        <StyledTrashBtn active={transcript} clickHandler={resetTranscript} />
       </OutputContainer>
       <SelectSendDiv>
         <StyledSelect>
@@ -56,7 +53,7 @@ const Dictaphone = () => {
           <option>test2</option>
           <option>test3</option>
         </StyledSelect>
-        <SendButtonStyled>Send</SendButtonStyled>
+        <SendButtonStyled disabled={!transcript}>Send</SendButtonStyled>
       </SelectSendDiv>
     </Container>
   );

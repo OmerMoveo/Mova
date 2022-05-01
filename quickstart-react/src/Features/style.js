@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const MicWrapper = styled.div`
-  background-color: ${(props) => (props.active ? "green" : "red")};
+  background-color: ${(props) => (props.active ? "#E2445C" : "#0073EA")};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,36 +17,60 @@ export const MicWrapper = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: #33354b;
   align-items: center;
-  background-color: white;
   border-radius: 5rem;
   padding: 5rem;
+  border: 0.1em solid #181C3C;
+  box-shadow: 0em 0em 0.3em white;
 `;
 
 export const ListenStatus = styled.p`
-  color: ${(props) => (props.active ? "green" : "red")};
+  //color: ${(props) => (props.active ? "white" : "#676879")};
   text-align: center;
+  color: white;
+  font-weight: bolder;
 `;
 
 export const StyledSelect = styled.select`
   height: 30px;
   padding: 0 0.5em;
-  background-color: white;
+  background-color: #0073EA;
+  color: white;
+  position: relative;
+  text-align: center;
+  width: 12em;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export const SendButtonStyled = styled.button`
   margin-top: 10px;
-  width: 80px;
-  height: 30px;
-  background-color: "#fffff";
-  border-radius: 2px;
-  border: none;
+  width: 12em;
+  color:white;
+  padding: 4px 8px;
+  height: 32px;
+  background-color: transparent;
+  border: 1px solid #181C3C;
+  border-radius: 4px;
+  box-shadow: 0em 0em 0.2em white;
+  cursor: pointer;
+  :disabled {
+    cursor: not-allowed;
+    font-style: italic;
+    color: darkgray;
+  }
+  :not([disabled]):hover {
+    background-color: #181C3C;
+  }
 `;
 
 export const SelectSendDiv = styled.div`
   flex-direction: column;
   display: flex;
   align-items: center;
+  width: 12em;
 `;
 
 export const OutputContainer = styled.div`
@@ -60,6 +84,7 @@ export const OutputContainer = styled.div`
   max-width: 20em;
   padding: 0.5em 1em;
   margin: 1em 0;
+  background-color: white
 `;
 
 export const OutputText = styled.p`
