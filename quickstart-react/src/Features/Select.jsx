@@ -6,8 +6,8 @@ function Select(props) {
       <option disabled selected>
         {props.title}
       </option>
-      {props.options.map((item) => (
-        <option>{item}</option>
+      {props.options.map((item, index) => (
+        <option key={index}>{item}</option>
       ))}
     </StyledSelect>
   );
