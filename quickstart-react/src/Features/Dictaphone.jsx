@@ -18,6 +18,7 @@ import {
 import mondaySdk from "monday-sdk-js";
 import { useContext } from "react";
 import { AppContext } from "../context/AppState";
+import { firstCaseUppered } from "../utils/stringUtils";
 const monday = mondaySdk();
 const Dictaphone = () => {
   const { setUserData, userData, setBoardData, boardData, selectedColumn } =
@@ -26,14 +27,16 @@ const Dictaphone = () => {
     monday.listen("context", async (res) => {
       setUserData(res.data);
       const itemRes =
-        res.data.itemIds &&
+        (res.data.itemIds || res.data.itemId) &&
         (await monday.api(
-          `query { items (ids: $itemIds) { name column_values { title text }}}`,
+          `query ($itemIds: [Int]) { items (ids: $itemIds) { name column_values{title text} }}`,
           {
-            variables: { itemIds: res.data.itemIds[0] },
+            variables: { itemIds: res.data.itemIds || res.data.itemId },
           }
         ));
-      setBoardData(itemRes);
+      if (itemRes) {
+        setBoardData(itemRes.data.items[0]);
+      }
     });
   }, []);
 
@@ -45,19 +48,34 @@ const Dictaphone = () => {
   } = useSpeechRecognition();
 
   const handleClick = async () => {
-    if (!selectedColumn || !userData || !transcript) return;
-    const query = `mutation changeValues($board_id: Int!, $item_id: Int, $column_id: String!, $value: JSON!) {
-      change_column_value (board_id: $board_id, item_id: $item_id , column_id: $column_id, value: $value) {
-        id
-      } 
-    }`;
-    const variables = {
-      board_id: userData.boardId[0],
-      item_id: userData.itemIds[0],
-      column_id: selectedColumn,
-      value: transcript,
-    };
-    await monday.api(query, { variables });
+    try {
+      if (!selectedColumn || !userData || !transcript) return;
+      let query = "";
+      if (
+        selectedColumn === "Epic" ||
+        selectedColumn === "Status" ||
+        selectedColumn === "Priority"
+      ) {
+        query = `mutation changeValues($board_id: Int!, $item_id: Int!, $column_id: String!) {
+          change_column_value (board_id: $board_id, item_id: $item_id , column_id:$column_id, value:\"{\\\"label\\\" : \\\"${firstCaseUppered(
+            transcript
+          )}\\\"}\"){name}
+          }`;
+      }
+      if (selectedColumn === "Subitems") {
+        query = `mutation{ create_subitem (parent_item_id: ${
+          userData.itemId ? userData.itemId : userData.itemIds[0]
+        }, item_name: \"${transcript}\"){ id board { id }}}`;
+      }
+      const variables = {
+        board_id: userData.boardIds[0],
+        item_id: userData.itemId ? userData.itemId : userData.itemIds[0],
+        column_id: selectedColumn.toLowerCase(),
+      };
+      await monday.api(query, { variables });
+    } catch (error) {
+      console.log(error);
+    }
   };
   const micClick = () => {
     if (!listening) {
