@@ -17,19 +17,20 @@ export const MicWrapper = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #33354b;
+  background-color: ${(props) =>
+    props.theme === "light" ? "transparent" : "#0073EA"};
   align-items: center;
   border-radius: 5rem;
-  padding: 5rem;
+  padding: 3rem;
   border: 0.1em solid #181c3c;
-  box-shadow: 0em 0em 0.3em white;
+  box-shadow: 0em 0em 0.2em white;
 `;
 
 export const ListenStatus = styled.p`
-  //color: ${(props) => (props.active ? "white" : "#676879")};
+  color: ${(props) => (props.theme === "light" ? "black" : "white")};
   text-align: center;
-  color: white;
   font-weight: bolder;
+  font-family: "Arial";
 `;
 
 export const StyledSelect = styled.select`

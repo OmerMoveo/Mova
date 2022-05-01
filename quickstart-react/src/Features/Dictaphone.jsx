@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import AppState, { AppContext } from "../context/AppState";
 import { Button } from "monday-ui-components";
 import Select from "./Select";
 import SpeechRecognition, {
@@ -43,6 +44,10 @@ const Dictaphone = () => {
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
+  const { theme, setTheme } = useContext(AppContext);
+  useEffect(() => {
+    console.log(theme);
+  }, []);
 
   const handleClick = async () => {
     if (!selectedColumn || !userData || !transcript) return;
@@ -69,12 +74,13 @@ const Dictaphone = () => {
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
+
   return (
-    <Container>
+    <Container theme={theme}>
       <MicWrapper active={listening} onClick={micClick}>
         <StyledMicBtn />
       </MicWrapper>
-      <ListenStatus active={listening}>
+      <ListenStatus theme={theme}>
         {listening ? "Listening..." : "Start recording now"}
       </ListenStatus>
       <OutputContainer>
