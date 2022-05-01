@@ -1,5 +1,7 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Button } from "monday-ui-components";
+import Select from "./Select";
+
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -13,8 +15,9 @@ import {
   OutputText,
   SelectSendDiv,
   SendButtonStyled,
-  StyledSelect,
 } from "./style";
+import { useEffect } from "react";
+
 const Dictaphone = () => {
   const {
     transcript,
@@ -47,15 +50,11 @@ const Dictaphone = () => {
         <StyledTrashBtn active={transcript} clickHandler={resetTranscript} />
       </OutputContainer>
       <SelectSendDiv>
-        <StyledSelect>
-          <option disabled selected>
-            Assign item
-          </option>
-          <option>test1</option>
-          <option>test2</option>
-          <option>test3</option>
-        </StyledSelect>
-        <SendButtonStyled disabled={!transcript}>Send</SendButtonStyled>
+        <Select
+          options={["First item", "Second item", "Third item"]}
+          title="Assign item"
+        />
+        <Button label="Update" disabled={!transcript}></Button>
       </SelectSendDiv>
     </Container>
   );
