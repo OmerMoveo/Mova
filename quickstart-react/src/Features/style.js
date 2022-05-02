@@ -1,5 +1,17 @@
 import styled from "styled-components";
+import { Dropdown } from "monday-ui-react-core";
 
+export const StyledDropdown = styled(Dropdown)`
+  min-width: 150px;
+  margin-bottom: 6px;
+  * > div {
+    max-height: 4.25rem;
+  }
+  * > input {
+    pointer-events: none;
+    user-select: none;
+  }
+`;
 export const MicWrapper = styled.div`
   background-color: ${(props) => (props.active ? "#E2445C" : "#0073EA")};
   animation: ${(props) => props.active && "pulse 2.5s ease-out infinite"};

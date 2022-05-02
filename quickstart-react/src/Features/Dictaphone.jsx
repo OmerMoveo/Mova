@@ -125,7 +125,10 @@ const Dictaphone = () => {
           options={boardData && boardData["column_values"]}
           title="Assign item"
         />
-        <SendButtonStyled disabled={!transcript} onClick={handleClick}>
+        <SendButtonStyled
+          disabled={!transcript || !selectedColumn}
+          onClick={handleClick}
+        >
           Update
         </SendButtonStyled>
       </SelectSendDiv>

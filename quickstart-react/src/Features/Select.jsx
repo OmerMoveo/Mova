@@ -3,22 +3,23 @@ import { useContext } from "react";
 import { useState } from "react";
 import { AppContext } from "../context/AppState";
 import { StyledSelect } from "./style";
+import { StyledDropdown } from "./style";
 function Select(props) {
   const { setSelectedColumn, selectedColumn } = useContext(AppContext);
+  const ArrayToArrayOfObjects = (arrOfItems) =>
+    arrOfItems.map((item) => {
+      return { value: item.title, label: item.title };
+    });
   return (
-    <StyledSelect
-      disabled={props.disabled}
+    <StyledDropdown
+      placeholder={selectedColumn || props.title}
       value={selectedColumn}
-      onChange={(e) => setSelectedColumn(e.target.value)}
-    >
-      <option disabled selected>
-        {props.title}
-      </option>
-      {props.options &&
-        props.options.map((item, index) => (
-          <option key={index}>{item.title}</option>
-        ))}
-    </StyledSelect>
+      onChange={(e) => {
+        if (!e) return;
+        setSelectedColumn(e.value);
+      }}
+      options={props.options && ArrayToArrayOfObjects(props.options)}
+    ></StyledDropdown>
   );
 }
 
