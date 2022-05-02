@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import { Dropdown } from "monday-ui-react-core";
+
+export const StyledDropdown = styled(Dropdown)`
+  min-width: 150px;
+`;
 
 export const MicWrapper = styled.div`
   background-color: ${(props) => (props.active ? "#E2445C" : "#0073EA")};

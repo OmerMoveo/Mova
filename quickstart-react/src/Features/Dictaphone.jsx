@@ -17,8 +17,8 @@ import {
   SendButtonStyled,
 } from "./style";
 import mondaySdk from "monday-sdk-js";
-import { useContext } from "react";
-import { AppContext } from "../context/AppState";
+import { Dropdown } from "monday-ui-react-core";
+import { StyledDropdown } from "./style";
 const monday = mondaySdk();
 const Dictaphone = () => {
   const { setUserData, userData, setBoardData, boardData, selectedColumn } =
@@ -44,10 +44,6 @@ const Dictaphone = () => {
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
-  const { theme, setTheme } = useContext(AppContext);
-  useEffect(() => {
-    console.log(theme);
-  }, []);
 
   const handleClick = async () => {
     if (!selectedColumn || !userData || !transcript) return;
@@ -76,11 +72,11 @@ const Dictaphone = () => {
   }
 
   return (
-    <Container theme={theme}>
+    <Container theme={userData ? userData.userData.theme : ""}>
       <MicWrapper active={listening} onClick={micClick}>
         <StyledMicBtn />
       </MicWrapper>
-      <ListenStatus theme={theme}>
+      <ListenStatus theme={userData ? userData.userData.theme : ""}>
         {listening ? "Listening..." : "Start recording now"}
       </ListenStatus>
       <OutputContainer>
@@ -93,6 +89,13 @@ const Dictaphone = () => {
           title="Assign item"
         />
         <Button label="Update" disabled={!transcript} onClick={handleClick} />
+        <StyledDropdown
+          options={[
+            { value: 2, label: "Option 2" },
+            { value: 3, label: "Option 3" },
+          ]}
+          placeholder="Assign item"
+        />
       </SelectSendDiv>
     </Container>
   );
