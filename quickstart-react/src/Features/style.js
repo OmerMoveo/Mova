@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const MicWrapper = styled.div`
   background-color: ${(props) => (props.active ? "#E2445C" : "#0073EA")};
+  animation: ${(props) => props.active && "pulse 2.5s ease-out infinite"};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,34 +13,51 @@ export const MicWrapper = styled.div`
   :hover {
     opacity: 0.8;
   }
+  @keyframes pulse {
+    25% {
+      transform: scale(0.8);
+    }
+    75% {
+      transform: scale(1.2);
+    }
+  }
 `;
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${(props) =>
-    props.theme === "light" ? "rgb(130, 128, 121)" : "#33354b"};
+  background-color: #33354b;
   align-items: center;
   border-radius: 5rem;
   padding: 2rem 5rem;
-  box-shadow: ${(props) =>
-    props.theme === "light"
-      ? "0.2em 0.2em 0.3em rgb(130, 128, 121)"
-      : "0.2em 0.2em 0.3em #33354b"};
+  box-shadow: 0.2em 0.2em 0.3em #33354b;
 `;
 
 export const ListenStatus = styled.p`
   color: white;
   text-align: center;
   font-weight: bolder;
+  animation: ${(props) => props.active && "listen 2.5s ease-out infinite"};
+  @keyframes listen {
+    25% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    75% {
+      opacity: 0;
+    }
+  }
 `;
 
 export const StyledSelect = styled.select`
   height: 30px;
-  padding: 0 0.5em;
+  padding: 4px 8px;
   background-color: ${(props) => (props.disabled ? "#c6c6c6" : "#0073ea")};
   color: white;
   position: relative;
+  border-radius: 5px;
   text-align: center;
   width: 12em;
   margin-bottom: 8px;
@@ -57,7 +75,7 @@ export const SendButtonStyled = styled.button`
   height: 32px;
   background-color: #0073ea;
   border: none;
-  border-radius: 4px;
+  border-radius: 90px;
   cursor: pointer;
   :disabled {
     cursor: not-allowed;
