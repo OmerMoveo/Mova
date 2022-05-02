@@ -7,6 +7,7 @@ function Select(props) {
   const { setSelectedColumn, selectedColumn } = useContext(AppContext);
   return (
     <StyledSelect
+      disabled={props.disabled}
       value={selectedColumn}
       onChange={(e) => setSelectedColumn(e.target.value)}
     >

@@ -17,25 +17,27 @@ export const MicWrapper = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #33354b;
+  background-color: ${(props) =>
+    props.theme === "light" ? "rgb(130, 128, 121)" : "#33354b"};
   align-items: center;
   border-radius: 5rem;
-  padding: 5rem;
-  border: 0.1em solid #181c3c;
-  box-shadow: 0em 0em 0.3em white;
+  padding: 2rem 5rem;
+  box-shadow: ${(props) =>
+    props.theme === "light"
+      ? "0.2em 0.2em 0.3em rgb(130, 128, 121)"
+      : "0.2em 0.2em 0.3em #33354b"};
 `;
 
 export const ListenStatus = styled.p`
-  //color: ${(props) => (props.active ? "white" : "#676879")};
-  text-align: center;
   color: white;
+  text-align: center;
   font-weight: bolder;
 `;
 
 export const StyledSelect = styled.select`
   height: 30px;
   padding: 0 0.5em;
-  background-color: #0073ea;
+  background-color: ${(props) => (props.disabled ? "#c6c6c6" : "#0073ea")};
   color: white;
   position: relative;
   text-align: center;
@@ -43,6 +45,7 @@ export const StyledSelect = styled.select`
   margin-bottom: 8px;
   :hover {
     cursor: pointer;
+    background-color: #075bb3;
   }
 `;
 
@@ -52,18 +55,18 @@ export const SendButtonStyled = styled.button`
   color: white;
   padding: 4px 8px;
   height: 32px;
-  background-color: transparent;
-  border: 1px solid #181c3c;
+  background-color: #0073ea;
+  border: none;
   border-radius: 4px;
-  box-shadow: 0em 0em 0.2em white;
   cursor: pointer;
   :disabled {
     cursor: not-allowed;
     font-style: italic;
     color: darkgray;
+    background-color: #c6c6c6;
   }
   :not([disabled]):hover {
-    background-color: #181c3c;
+    background-color: #075bb3;
   }
 `;
 
