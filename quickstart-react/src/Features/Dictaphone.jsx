@@ -15,6 +15,7 @@ import {
   SelectSendDiv,
   SendButtonStyled,
 } from "./style";
+import Swal from "sweetalert2";
 import mondaySdk from "monday-sdk-js";
 import { useContext } from "react";
 import { AppContext } from "../context/AppState";
@@ -73,9 +74,28 @@ const Dictaphone = () => {
         column_id: selectedColumn.toLowerCase(),
       };
       await monday.api(query, { variables });
+      popup(false, `${selectedColumn} Changed :)`);
     } catch (error) {
-      console.log(error);
+      if (
+        selectedColumn === "Epic" ||
+        selectedColumn === "Status" ||
+        selectedColumn === "Priority"
+      ) {
+        popup(true, `You inserted an invalid ${selectedColumn} label :(`);
+      } else {
+        popup(true, `some problem occured try again later :(`);
+      }
     }
+  };
+  const popup = (isError, popText) => {
+    Swal.fire({
+      title: isError ? "Error!" : "Item Updated",
+      text: popText,
+      icon: isError ? "error" : "success",
+      confirmButtonText: "Cool",
+      timer: 2000,
+      timerProgressBar: true,
+    });
   };
   const micClick = () => {
     if (!listening) {
@@ -88,7 +108,7 @@ const Dictaphone = () => {
     return <span>Browser doesn't support speech recognition.</span>;
   }
   return (
-    <Container>
+    <Container theme={userData?.theme}>
       <MicWrapper active={listening} onClick={micClick}>
         <StyledMicBtn />
       </MicWrapper>
@@ -101,10 +121,13 @@ const Dictaphone = () => {
       </OutputContainer>
       <SelectSendDiv>
         <Select
+          disabled={!transcript}
           options={boardData && boardData["column_values"]}
           title="Assign item"
         />
-        <Button label="Update" disabled={!transcript} onClick={handleClick} />
+        <SendButtonStyled disabled={!transcript} onClick={handleClick}>
+          Update
+        </SendButtonStyled>
       </SelectSendDiv>
     </Container>
   );

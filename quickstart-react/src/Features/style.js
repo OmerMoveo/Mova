@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const MicWrapper = styled.div`
   background-color: ${(props) => (props.active ? "#E2445C" : "#0073EA")};
+  animation: ${(props) => props.active && "pulse 2.5s ease-out infinite"};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,6 +13,14 @@ export const MicWrapper = styled.div`
   :hover {
     opacity: 0.8;
   }
+  @keyframes pulse {
+    25% {
+      transform: scale(0.8);
+    }
+    75% {
+      transform: scale(1.2);
+    }
+  }
 `;
 
 export const Container = styled.div`
@@ -20,29 +29,41 @@ export const Container = styled.div`
   background-color: #33354b;
   align-items: center;
   border-radius: 5rem;
-  padding: 5rem;
-  border: 0.1em solid #181c3c;
-  box-shadow: 0em 0em 0.3em white;
+  padding: 2rem 5rem;
+  box-shadow: 0.2em 0.2em 0.3em #33354b;
 `;
 
 export const ListenStatus = styled.p`
-  //color: ${(props) => (props.active ? "white" : "#676879")};
-  text-align: center;
   color: white;
+  text-align: center;
   font-weight: bolder;
+  animation: ${(props) => props.active && "listen 2.5s ease-out infinite"};
+  @keyframes listen {
+    25% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    75% {
+      opacity: 0;
+    }
+  }
 `;
 
 export const StyledSelect = styled.select`
   height: 30px;
-  padding: 0 0.5em;
-  background-color: #0073ea;
+  padding: 4px 8px;
+  background-color: ${(props) => (props.disabled ? "#c6c6c6" : "#0073ea")};
   color: white;
   position: relative;
+  border-radius: 5px;
   text-align: center;
   width: 12em;
   margin-bottom: 8px;
   :hover {
     cursor: pointer;
+    background-color: #075bb3;
   }
 `;
 
@@ -52,18 +73,18 @@ export const SendButtonStyled = styled.button`
   color: white;
   padding: 4px 8px;
   height: 32px;
-  background-color: transparent;
-  border: 1px solid #181c3c;
-  border-radius: 4px;
-  box-shadow: 0em 0em 0.2em white;
+  background-color: #0073ea;
+  border: none;
+  border-radius: 90px;
   cursor: pointer;
   :disabled {
     cursor: not-allowed;
     font-style: italic;
     color: darkgray;
+    background-color: #c6c6c6;
   }
   :not([disabled]):hover {
-    background-color: #181c3c;
+    background-color: #075bb3;
   }
 `;
 
